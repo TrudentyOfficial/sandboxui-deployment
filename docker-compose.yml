@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx
+    container_name: sandbox-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./proxy:/etc/nginx/templates
+      - ./nginx-logs:/var/log/nginx
+      - ./consumerflow-ssl:/etc/nginx/consumerflow-ssl
+      - ./console-ssl:/etc/nginx/console-ssl
+      - ../sandbox-consumer-flow/build:/var/www/sandbox-consumer-flow
+      - ../web-app/build:/var/www/web-app
+    restart: on-failure

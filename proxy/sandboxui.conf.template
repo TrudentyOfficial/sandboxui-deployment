@@ -1,0 +1,50 @@
+
+server {
+    if ($host = staging.trustnetwork.trudenty.net) {
+        return 301 https://$host$request_uri;
+    } 
+
+    server_name staging.trustnetwork.trudenty.net;
+    listen 80;
+    listen [::]:80;
+    
+}
+
+server{
+    listen [::]:443 ssl; 
+    listen 443 ssl; 
+
+    server_name staging.trustnetwork.trudenty.net;
+    root /var/www/web-app;
+    index index.html;
+    ssl_certificate /etc/nginx/console-ssl/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/nginx/console-ssl/privkey.pem;
+    location / {
+        try_files $uri /index.html;
+    }
+}
+
+server{
+    listen [::]:443 ssl; 
+    listen 443 ssl; 
+
+    server_name sandboxstaging.trustnetwork.trudenty.net;
+    root /var/www/sandbox-consumer-flow;
+    index index.html;
+    ssl_certificate /etc/nginx/consumerflow-ssl/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/nginx/consumerflow-ssl/privkey.pem;
+    location / {
+        try_files $uri /index.html;
+    }
+}
+
+server {
+    if ($host = sandboxstaging.trustnetwork.trudenty.net) {
+        return 301 https://$host$request_uri;
+    } 
+
+    server_name sandboxstaging.trustnetwork.trudenty.net;
+    listen 80;
+    listen [::]:80;  
+}
+
