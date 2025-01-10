@@ -7,6 +7,9 @@ server {
     server_name sandbox.trustnetwork.trudenty.net;
     listen 80;
     listen [::]:80;
+
+    # Prevent indexing of this domain
+    add_header X-Robots-Tag "noindex, nofollow";
     
 }
 
@@ -19,6 +22,10 @@ server{
     index index.html;
     ssl_certificate /etc/nginx/console-ssl/fullchain.pem; # managed by Certbot
     ssl_certificate_key /etc/nginx/console-ssl/privkey.pem;
+
+    # Prevent indexing of this domain
+    add_header X-Robots-Tag "noindex, nofollow";
+
     location / {
         try_files $uri /index.html;
     }
@@ -33,6 +40,10 @@ server{
     index index.html;
     ssl_certificate /etc/nginx/consumerflow-ssl/fullchain.pem; # managed by Certbot
     ssl_certificate_key /etc/nginx/consumerflow-ssl/privkey.pem;
+
+    # Prevent indexing of this domain
+    add_header X-Robots-Tag "noindex, nofollow";
+
     location / {
         try_files $uri /index.html;
     }
@@ -46,5 +57,39 @@ server {
     server_name sandboxconsumer.trustnetwork.trudenty.net;
     listen 80;
     listen [::]:80;  
+
+    # Prevent indexing of this domain
+    add_header X-Robots-Tag "noindex, nofollow";
 }
 
+server {
+    if ($host = demo.trustnetwork.trudenty.net) {
+        return 301 https://$host$request_uri;
+    } 
+
+    server_name demo.trustnetwork.trudenty.net;
+    listen 80;
+    listen [::]:80;
+
+    # Prevent indexing of this domain
+    add_header X-Robots-Tag "noindex, nofollow";
+    
+}
+
+server{
+    listen [::]:443 ssl; 
+    listen 443 ssl; 
+
+    server_name demo.trustnetwork.trudenty.net;
+    root /var/www/mastercard-menu-demo;
+    index index.html;
+    ssl_certificate /etc/nginx/menu-ssl/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/nginx/menu-ssl/privkey.pem;
+
+    # Prevent indexing of this domain
+    add_header X-Robots-Tag "noindex, nofollow";
+
+    location / {
+        try_files $uri /index.html;
+    }
+}

@@ -12,6 +12,8 @@ services:
       - ./nginx-logs:/var/log/nginx
       - ./consumerflow-ssl:/etc/nginx/consumerflow-ssl
       - ./console-ssl:/etc/nginx/console-ssl
+      - ./menu-ssl:/etc/nginx/menu-ssl
       - ../sandbox-consumer-flow/build:/var/www/sandbox-consumer-flow
       - ../web-app/build:/var/www/web-app
+      - ../mastercard-menu-demo/build:/var/www/mastercard-menu-demo
     restart: on-failure
